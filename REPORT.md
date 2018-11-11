@@ -33,6 +33,8 @@ documents with fox and brown that appears together.
 
 ### UI
 
+Renders a UI (React app) that allows you to search over indexed data. Supports serverside pagination.
+
 - method: `GET`
 - returns: `text/html` (UI for searching over the indexed files)
 
