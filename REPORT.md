@@ -169,21 +169,11 @@ documents with fox and brown that appears together.
 
 4. Results are returned based on the `l` and `o` query parameters which are essentially the limit and offset values.
 
+## Code structure
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- src
+    + client
+        * src/App.js (client entrypoint)
+    + server
+        * index.js (server entrypoint)
 
