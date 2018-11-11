@@ -177,3 +177,6 @@ documents with fox and brown that appears together.
     + server
         * index.js (server entrypoint)
 
+## Work duration
+
+10 Nov 9AM to 11 Nov 9PM
