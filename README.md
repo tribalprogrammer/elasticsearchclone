@@ -1,6 +1,6 @@
 # Elastic search clone
 
-!{demo.gif}(https://raw.githubusercontent.com/tribalprogrammer/elasticsearchclone/master/assets/demo.gif)
+![demo.gif](https://raw.githubusercontent.com/tribalprogrammer/elasticsearchclone/master/assets/demo.gif)
 
 ```
 git clone git@github.com:tribalprogrammer/elasticsearchclone
