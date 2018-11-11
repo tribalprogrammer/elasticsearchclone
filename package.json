@@ -26,7 +26,6 @@
     "write-file-atomic": "^2.3.0"
   },
   "devDependencies": {
-    "eslint": "^5.8.0",
     "esm": "^3.0.84"
   }
 }
