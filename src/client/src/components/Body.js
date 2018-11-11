@@ -10,6 +10,9 @@ const AppBody = ({results, search, loading}) => {
       </div>
     );  
   }
+  if (results.length === 0) {
+    return "Nothing found";
+  }
   return <SearchList results={results}/>
 }
 

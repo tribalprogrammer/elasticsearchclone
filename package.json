@@ -4,10 +4,10 @@
   "description": "A simple elastic search clone",
   "main": "src/index.js",
   "scripts": {
-    "start": "node -r esm src/server/index.js",
+    "server": "node -r esm src/server/index.js",
     "build-client": "cd src/client && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "begin": "npm run build-client && npm start"
+    "start": "npm run build-client && npm run server"
   },
   "repository": {
     "type": "git",

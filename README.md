@@ -4,7 +4,7 @@
 git clone git@github.com:tribalprogrammer/elasticsearchclone
 cd elasticsearchclone
 npm install
-npm run begin
+npm start
 ```
 
 Once the server starts, head to `http://localhost:3000`.
