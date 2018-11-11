@@ -1,0 +1,4 @@
+1. Implement phrase search
+2. Check out IDF
+3. Pagination
+4. Allow mentioning which field
