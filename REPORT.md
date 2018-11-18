@@ -18,7 +18,7 @@ follows:
     3. modify the rank of results using TF.IDF
 * exposes 2 REST API endpoints; one for indexing data and another for
 searching
-    4. along with normal search, it should also have functionality to do phrase
+* along with normal search, it should also have functionality to do phrase
 queries. A phrase query does a search based on the phrases instead of individual term based search. ie "fox brown" should match
 documents with fox and brown that appears together.
 * serves a UI at `/` that allows you to search indexed docs
@@ -27,7 +27,8 @@ documents with fox and brown that appears together.
 
 * phrase queries
 * caching for phrase queries
-* building a UI to index elements
+* implementing a pipeline for atomic updates
+* building a UI to index elements (UI only supports searching
 
 ## API
 
