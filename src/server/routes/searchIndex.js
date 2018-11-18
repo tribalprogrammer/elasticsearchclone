@@ -12,7 +12,7 @@ module.exports = async (request, response) => {
 
   // validate request
   const validationError = validateRequest(query);
-  if (validationError.code) {
+  if (validationError.code === 'IPARAMS') {
     response.statusCode = 400;
     return response.json(validationError);
   }

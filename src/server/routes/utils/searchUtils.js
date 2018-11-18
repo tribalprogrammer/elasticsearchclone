@@ -17,29 +17,21 @@ const search = (query) => {
     inContent = true;
     queryString = query.substring(8);
   }
-  
   const words = new Set(queryString.toLowerCase().replace(/[^a-zA-Z0-9]/g, ' ').split(" ").filter((w) => Boolean(w)));
-  const occurenceInTitle = {};
-  const occurenceInContent = {};
   const termFrequency = {};
   words.forEach((word) => {
     termFrequency[word] = {};
-    if (!fileExists(`${word}.json`, indexPath)) {
+    let index;
+    try {
+      index = require(`${indexPath}/${word}.json`);
+    } catch (e) {
       return;
     }
-    const index = require(`${indexPath}/${word}.json`);
     if (!inContent) {
       Object.keys(index.title).forEach((doc) => {
         termFrequency[word][doc] = termFrequency[word][doc] ?
         termFrequency[word][doc] + index.title[doc].length * 5 :
         index.title[doc].length * 5;
-        if (occurenceInTitle[doc]) {
-          occurenceInTitle[doc][word] = index.title[doc];
-        } else {
-          occurenceInTitle[doc] = {
-            [word]: index.title[doc]
-          };
-        }
       });
     }
     if (!inTitle) {
@@ -47,17 +39,9 @@ const search = (query) => {
         termFrequency[word][doc] = termFrequency[word][doc] ?
         termFrequency[word][doc] + index.content[doc].length :
         index.content[doc].length;
-        if (occurenceInContent[doc]) {
-          occurenceInContent[doc][word] = index.content[doc];
-        } else {
-          occurenceInContent[doc] = {
-            [word]: index.content[doc]
-          };
-        }
       });
     }
   })
-
   scaledTFIDFMatrix = getScaledTFIDF(termFrequency);
   const ranking = getTFIDFBasedRankings(scaledTFIDFMatrix);
   return ranking;
@@ -65,18 +49,22 @@ const search = (query) => {
 
 const getScaledTFIDF = (tfMatrix) => {
   const scaledTFIDFMatrix = {};
+  const termDFRatingMap = {};
   const totalNumberOfDocs = getFilesInDirectory(dataPath).length;
   Object.keys(tfMatrix).forEach((term) => {
+    if (!termDFRatingMap[term]) {
+      termDFRatingMap[term] = Object.keys(tfMatrix[term]).length;
+    }
     Object.keys(tfMatrix[term]).forEach((doc) => {
       if (!scaledTFIDFMatrix[doc]) { scaledTFIDFMatrix[doc] = {}; }
       scaledTFIDFMatrix[doc][term] = 
       Math.log(1 + tfMatrix[term][doc]) *
-      Math.log(totalNumberOfDocs / Object.keys(tfMatrix[term]).length) *
+      Math.log(totalNumberOfDocs / termDFRatingMap[term]) *
       2.303;
     });
   });
   return scaledTFIDFMatrix;
-}
+};
 
 const getTFIDFBasedRankings = (scaledTFIDFMatrix) => {
   const tfIdfRating = {};
@@ -86,12 +74,11 @@ const getTFIDFBasedRankings = (scaledTFIDFMatrix) => {
       tfIdfRating[doc] += scaledTFIDFMatrix[doc][term];
     })
   });
-  const rankings = Object.keys(tfIdfRating).map((doc) => {
-    return { [doc]: tfIdfRating[doc] };
-  }).sort((doc1, doc2) => doc2[Object.keys(doc2)[0]] - doc1[Object.keys(doc1)[0]])
-  .map((doc) => {
-    return Object.keys(doc)[0];
+
+  const rankings = Object.keys(tfIdfRating).sort((doc1, doc2) => {
+    return tfIdfRating[doc2] - tfIdfRating[doc1]; 
   });
+
   return rankings;
 }
 
