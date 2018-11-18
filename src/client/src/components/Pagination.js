@@ -24,9 +24,9 @@ const PaginationBody = ({limit, offset, count, search}) => {
         &lt;
       </div>
       <div
-        className={ (offset + limit > count) ? "Pagination-button-disabled" : "Pagination-button"}
+        className={ (offset + limit >= count) ? "Pagination-button-disabled" : "Pagination-button"}
         onClick={() => {
-          if (offset + limit > count) { return; }
+          if (offset + limit >= count) { return; }
           search(limit, offset + limit);
         }}
       >
